@@ -1,0 +1,24 @@
+{
+    "name": "dimbo/html2pdf",
+    "description": "laravel wrapper for wkhtmltopdf",
+    "authors": [
+        {
+            "name": "Dmitry Bagdanov",
+            "email": "dimbo_job@mail.ru"
+        }
+    ],
+    "config": {
+        "platform": { "php": "5.6" }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "symfony/process": "2.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dimbo\\Html2Pdf\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

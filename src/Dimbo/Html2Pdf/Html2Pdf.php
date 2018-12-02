@@ -25,19 +25,23 @@ class Html2Pdf
     /** @var  string */
     protected $outputFile;
 
+    /** @var \Tethra\Statistics\StatisticsCollector */
+    protected $statCollector;
+
     /**
      * Html2Pdf constructor.
      *
      * @param string $pathToBinary
      * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct($pathToBinary, $logger)
+    public function __construct($pathToBinary, $logger, $statCollector)
     {
         if( !file_exists($pathToBinary) )
             throw new Html2PdfError(0, 'WKHTMLTOPDF executable not found');
 
         $this->pathToBinary = $pathToBinary;
         $this->logger = $logger;
+        $this->statCollector = $statCollector;
 
         $this->setGlobalOption('--quiet');
     }
@@ -303,7 +307,11 @@ class Html2Pdf
         $command = escapeshellarg($this->pathToBinary)
             . ' ' . $this->constructArgs();
 
+        $statEntry = $this->statCollector->newStatEntry('wkhtmltopdf', $command);
+
         $resultCode = $this->exec($command);
+
+        $this->statCollector->finishStatEntry($statEntry);
 
         $this->checkReturnCode($resultCode);
 

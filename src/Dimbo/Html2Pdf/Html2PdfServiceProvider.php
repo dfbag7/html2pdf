@@ -26,7 +26,8 @@ class Html2PdfServiceProvider extends ServiceProvider
         $this->app->bind('html2pdf', function()
         {
             return new Html2Pdf($this->app['config']->get('html2pdf::pathToBinary'),
-                $this->app['Psr\Log\LoggerInterface']);
+                $this->app['Psr\Log\LoggerInterface'],
+                $this->app['stat']);
         });
     }
 

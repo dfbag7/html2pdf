@@ -307,11 +307,17 @@ class Html2Pdf
         $command = escapeshellarg($this->pathToBinary)
             . ' ' . $this->constructArgs();
 
-        $statEntry = $this->statCollector->newStatEntry('wkhtmltopdf', $command);
+        if($this->statCollector !== null)
+        {
+            $statEntry = $this->statCollector->newStatEntry('wkhtmltopdf', $command);
+        }
 
         $resultCode = $this->exec($command);
 
-        $this->statCollector->finishStatEntry($statEntry);
+        if($this->statCollector !== null)
+        {
+            $this->statCollector->finishStatEntry($statEntry);
+        }
 
         $this->checkReturnCode($resultCode);
 
